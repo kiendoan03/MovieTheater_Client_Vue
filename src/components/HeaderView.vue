@@ -17,20 +17,34 @@
                     </a>
                 </div>
 
-                <!-- <div class="dropdown">
-                    <img class="col-12 border  " style="border-radius: 50%;object-fit: cover; overflow: hidden; height: 3vmax; width: 3vmax;" src="../public/img/user/Christian Bale.png" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                        height="" alt="">
-                    <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item bg-dark text-light" href="#">Profile</a></li>
-                        <li><a class="dropdown-item bg-dark text-light" href="#">Logout</a></li>
-                    </ul>
-                </div> -->
                     <div class="dropdown">
                         <img class="col-12 border" style="border-radius: 50%;object-fit: cover; overflow: hidden;height: 3vmax; width: 3vmax;" src="../assets/image/Netflix-avt.png" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" height="" alt="">
                             <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton1"> 
-                                <li><a class="dropdown-item bg-dark text-light" href="#">Login</a></li>
+                                <li><RouterLink v-if="!auth" class="dropdown-item bg-dark text-light" to="/login">Login</RouterLink></li>
+                                <li><Button v-if="auth" @click="logout" class="dropdown-item bg-dark text-light">Logout</Button></li>
                             </ul>
                     </div>  
 
             </section>
 </template>
+<script>
+    export default {
+        name: 'HeaderView',
+        data: function() {
+        return {
+            auth: false,
+        }
+    },
+    mounted() {
+        this.auth = localStorage.getItem('role') == 'Customer' && localStorage.getItem('token') != null;
+        console.log(this.auth);
+    },
+    methods: {
+        logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            this.$router.push('/login');
+        }
+    }
+}
+</script>

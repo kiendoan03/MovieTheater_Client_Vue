@@ -113,8 +113,8 @@ import axios from 'axios';
       this.getMovieIncomming();
     },
     methods:{
-      async getMovieShow(){
-         await  axios.get('https://localhost:7071/api/Movies/get-movies-showing').then(response => {
+       getMovieShow(){
+           axios.get('https://localhost:7071/api/Movies/get-movies-showing').then(response => {
             this.movie_show = response.data.map(movieShow => ({
               movieName: movieShow.movieName,
               id: movieShow.id,
@@ -125,8 +125,8 @@ import axios from 'axios';
             console.error('Error fetching movies:', error);
         });
       },
-      async getTopMovie(){
-        await axios.get('https://localhost:7071/api/movies/get-top-movies').then(response => {
+       getTopMovie(){
+         axios.get('https://localhost:7071/api/movies/get-top-movies').then(response => {
           this.top_movie = response.data.map(topMovie  => ({
             movieName: topMovie.movieName,
             id: topMovie.id,
@@ -137,8 +137,8 @@ import axios from 'axios';
           console.error('Error fetching movies:', error);
         });
       },
-      async getMovieIncomming(){
-        await axios.get('https://localhost:7071/api/movies/get-movies-upcoming').then(response => {
+       getMovieIncomming(){
+         axios.get('https://localhost:7071/api/movies/get-movies-upcoming').then(response => {
           this.movie_incomming = response.data.map(movieIncomming  => ({
             movieName: movieIncomming.movieName,
             id: movieIncomming.id,

@@ -1,4 +1,7 @@
 <script setup>
+import axios from 'axios';
+import { RouterLink } from 'vue-router';
+
 
 </script>
 <template>
@@ -11,7 +14,7 @@
 <section class="p-0 top-0 start-0 bottom-0 end-0">
     <div>
         <video style="object-fit: cover; backdrop-filter: brightness(60%);" class="full-screen-element col-12" id="trailerVideo" oncontextmenu="return false;" autoplay muted loop disablePictureInPicture>
-            <source src = "https://localhost:7071/uploads/videos/movieTrailers/da61bf1a-4a62-4ee6-a524-d7bab2e3d283_The Nun II.mp4">
+            <source :src ="this.movieDetail.trailer">
         </video>
     </div>
 </section>
@@ -27,17 +30,17 @@
         <div class="row mt-5">
             <div class="col-12 d-flex justify-content-center">
                 <div class="col-1 text-center">
-                    <span class="border text-light p-2 rounded-2">18+</span>
+                    <span class="border text-light p-2 rounded-2"> {{this.movieDetail.ageRestricted}} +</span>
                 </div>
                 <div class="col-1 text-center">
-                    <span class="text-light p-2">2023</span>
+                    <span class="text-light p-2">{{this.movieDetail.releaseDate}}</span>
                 </div>
                 <div class="col-1 text-center">
-                    <span class="text-light p-2">180 Min</span>
+                    <span class="text-light p-2">{{this.movieDetail.length}} Min</span>
                 </div>
                 <div class="col-1 text-center">
                     <span class="text-light p-2">
-                            English - VietSub
+                            {{this.movieDetail.language}}
                     </span>
                 </div>
             </div>
@@ -46,17 +49,17 @@
         <!-- Movie logo -->
         <div class="row">
             <div class="col-12 d-block">
-                <img class="col-4 d-block my-5 mx-auto" style="width: 30vmax" src="https://localhost:7071/uploads/images/movies/logos/066c6785-0176-45fd-b11e-5ac5ea2a21c0_The Nun II.png" alt="">
+                <img class="col-4 d-block my-5 mx-auto" style="width: 30vmax" :src="this.movieDetail.logo" alt="">
             </div>
         </div>
 
         <div class="row col-12 ps-5">
             <!-- Movie tags -->
-            <div class="">
+            <div class="genres">
 
                 <!-- @foreach($movie_cate as $movie_cate) -->
 
-                <span class="border me-2 text-light px-3 py-2 fs-5 rounded-2">Horror</span>
+                <span v-for="movieGenre in this.movieDetail.genres" class="border me-2 text-light px-3 py-2 fs-5 rounded-2">{{movieGenre.genreName}}</span>
 
                 <!-- @endforeach -->
 
@@ -66,7 +69,7 @@
                 <!-- Movie Detail -->
                 <div class="col-5 mt-4">
                     <span class="text-light fs-3" style="font-family: 'Poppins', sans-serif;">
-                        The NUN II
+                        {{this.movieDetail.movieName}}
                     </span>
                 </div>
 
@@ -112,20 +115,20 @@
     <!-- Movie text in4 -->
     <div class="col-7 hide-scrollbar" style="height: 35vmax; overflow-x: hidden; overflow-y: scroll;">
 
-        <p class="text-light" style="font-size: 2.5vmax; font-family: 'Poppins', sans-serif;">The NUN II</p>
+        <p class="text-light" style="font-size: 2.5vmax; font-family: 'Poppins', sans-serif;">{{this.movieDetail.movieName}}</p>
 
         <span class="border me-2 text-light px-3 py-2 fs-5 rounded-2">
             
             <span class="pe-2 fw-bold">IMDb </span>
 
-        <span class="border-start py-2 ps-2 text-light"> 5/5 </span>
+        <span class="border-start py-2 ps-2 text-light"> {{this.movieDetail.rating}}/5 </span>
         </span>
 
         <span class="border rounded-pill text-light text-center mx-2 px-3 py-2 fs-5" @click="toBookTickerPage" style="cursor: pointer;">
                 <i class="fa-solid fa-ticket" style="color: #ffffff;"></i>  Book Tickets 
         </span>
         <p class="text-light mt-4">
-            âsjd
+           {{this.movieDetail.synopsis}}
         </p>
 
         <!-- Actor and Director -->
@@ -137,11 +140,9 @@
 
 
                 <div class="d-flex my-4">
-                    <!-- @foreach($movie_actor as $movie_actor) -->
-                    <a href="">
-                        <img class="d-block me-5" src="https://localhost:7071/uploads/images/casts/478768e4-3afd-4ecd-9955-b7cba0447062_nhgjkl.png" style="object-fit: cover; border-radius: 50%; overflow: hidden; height: 6vmax; width: 6vmax;" alt="">
+                    <a v-for="movieCast in this.movieDetail.casts" :key="movieCast.id" href="">
+                        <img class="d-block me-5" :src="movieCast.castImage" style="object-fit: cover; border-radius: 50%; overflow: hidden; height: 6vmax; width: 6vmax;" alt="">
                     </a>
-                    <!-- @endforeach -->
                 </div>
 
 
@@ -151,11 +152,9 @@
             <div>
                 <span class="text-light" style="font-size: 1.7vmax;"> Directors </span>
                 <div class="d-flex my-4 ">
-                    <!-- @foreach($movie_director as $movie_director) -->
-                    <a href="">
-                        <img class="d-block  me-3" src="https://localhost:7071/uploads/images/casts/478768e4-3afd-4ecd-9955-b7cba0447062_nhgjkl.png" style="object-fit: cover; border-radius: 50%; overflow: hidden; height: 6vmax; width: 6vmax;" alt="">
+                    <a v-for="movieDirector in this.movieDetail.directors" :key="movieDirector.id" href="">
+                        <img class="d-block  me-3" :src="movieDirector.directorImage" style="object-fit: cover; border-radius: 50%; overflow: hidden; height: 6vmax; width: 6vmax;" alt="">
                     </a>
-                    <!-- @endforeach -->
                 </div>
             </div>
 
@@ -195,7 +194,7 @@
 
     <!-- Movie Img -->
     <div class="col-5 d-flex justify-content-end">
-        <img class="col-12 border rounded-3 border-0 " src="https://localhost:7071/uploads/images/movies/posters/0c182537-fbe9-4a11-96ac-8d7368f44651_The Nun II.png" alt="" style="object-fit: cover;height: 35vmax; width: 25vmax;">
+        <img class="col-12 border rounded-3 border-0 " :src="this.movieDetail.poster" alt="" style="object-fit: cover;height: 35vmax; width: 25vmax;">
     </div>
 
 </section>
@@ -210,70 +209,18 @@
       <span  @click="toDetailedPage" class="border rounded-pill text-light text-center px-3 py-2 fs-5" style="cursor: pointer;">
               <i class="fa-solid fa-backward"></i>  Back 
       </span>
-      <div  class="col-10 d-flex flex-wrap mx-auto hide-scrollbar mt-2 mb-5" style="height: 85%; overflow-x: hidden; overflow-y: scroll;">
+      <div v-for="schedule in this.scheduleMovie" :key="schedule.id"  class="col-10 d-flex flex-wrap mx-auto hide-scrollbar mt-2 mb-5" style="height: 85%; overflow-x: hidden; overflow-y: scroll;">
           <div class="card bg-dark text-light col-3 me-5 mx-5 py-3 mt-3 px-5 text-center" style="border-radius: 1vmax; height: 40%;">
               <div class="card-header text-danger">
                   <h2 class="mb-0 fw-bolder">
-                      Room 1
+                      {{schedule.room.roomName}}
                   </h2>
               </div>
               <div class="card-body">
-                  <h4 class="card-title mb-3">26-12-2024</h4>
-                  <p class="card-text fs-5"><b>Start time:</b> 20:00</p>
-                  <p class="card-text fs-5"><b>End time:</b> 22:00</p>
-                  <a href="orderTickets.html" class="btn btn-danger mt-3 py-2 px-5 border border-0 rounded-pill">Booking ticket</a>
-              </div>
-          </div>
-          <div class="card bg-dark text-light col-3 me-5 mx-5 py-3 mt-3 px-5 text-center" style="border-radius: 1vmax; height: 40%;">
-              <div class="card-header text-danger">
-                  <h2 class="mb-0 fw-bolder">
-                      Room 1
-                  </h2>
-              </div>
-              <div class="card-body">
-                  <h4 class="card-title mb-3">26-12-2024</h4>
-                  <p class="card-text fs-5"><b>Start time:</b> 20:00</p>
-                  <p class="card-text fs-5"><b>End time:</b> 22:00</p>
-                  <a href="orderTickets.html" class="btn btn-danger mt-3 py-2 px-5 border border-0 rounded-pill">Booking ticket</a>
-              </div>
-          </div>
-          <div class="card bg-dark text-light col-3 me-5 mx-5 py-3 mt-3 px-5 text-center" style="border-radius: 1vmax; height: 40%;">
-              <div class="card-header text-danger">
-                  <h2 class="mb-0 fw-bolder">
-                      Room 1
-                  </h2>
-              </div>
-              <div class="card-body">
-                  <h4 class="card-title mb-3">26-12-2024</h4>
-                  <p class="card-text fs-5"><b>Start time:</b> 20:00</p>
-                  <p class="card-text fs-5"><b>End time:</b> 22:00</p>
-                  <a href="orderTickets.html" class="btn btn-danger mt-3 py-2 px-5 border border-0 rounded-pill">Booking ticket</a>
-              </div>
-          </div>
-          <div class="card bg-dark text-light col-3 me-5 mx-5 py-3 mt-3 px-5 text-center" style="border-radius: 1vmax; height: 40%;">
-              <div class="card-header text-danger">
-                  <h2 class="mb-0 fw-bolder">
-                      Room 1
-                  </h2>
-              </div>
-              <div class="card-body">
-                  <h4 class="card-title mb-3">26-12-2024</h4>
-                  <p class="card-text fs-5"><b>Start time:</b> 20:00</p>
-                  <p class="card-text fs-5"><b>End time:</b> 22:00</p>
-                  <a href="orderTickets.html" class="btn btn-danger mt-3 py-2 px-5 border border-0 rounded-pill">Booking ticket</a>
-              </div>
-          </div>
-          <div class="card bg-dark text-light col-3 me-5 mx-5 py-3 mt-3 px-5 text-center" style="border-radius: 1vmax; height: 40%;">
-              <div class="card-header text-danger">
-                  <h2 class="mb-0 fw-bolder">
-                      Room 1
-                  </h2>
-              </div>
-              <div class="card-body">
-                  <h4 class="card-title mb-3">26-12-2024</h4>
-                  <p class="card-text fs-5"><b>Start time:</b> 20:00</p>
-                  <p class="card-text fs-5"><b>End time:</b> 22:00</p>
-                  <a href="orderTickets.html" class="btn btn-danger mt-3 py-2 px-5 border border-0 rounded-pill">Booking ticket</a>
+                  <h4 class="card-title mb-3">{{schedule.scheduleDate}}</h4>
+                  <p class="card-text fs-5"><b>Start time:</b> {{ schedule.startTime }}</p>
+                  <p class="card-text fs-5"><b>End time:</b> {{schedule.endTime}}</p>
+                  <RouterLink :to="'/bookingTicket/' + schedule.id" class="btn btn-danger mt-3 py-2 px-5 border border-0 rounded-pill">Booking ticket</RouterLink>
               </div>
           </div>
       </div>
@@ -288,7 +235,10 @@ export default {
       overviewPage: 0,
       detailedPage: 0,
       BookTickerPage: 0,
-      isMuted: false
+      isMuted: false,
+      movieDetail: [],
+      scheduleMovie: [],
+      baseUrl: "https://localhost:7071",
     };
   },
   mounted() {
@@ -302,8 +252,32 @@ export default {
     window.addEventListener('resize', this.setElementHeights);
     this.setElementHeights();
     document.body.style.overflow = "hidden";
+    this.movieId = this.$route.params.id;
+    this.getMovieDetail(this.$route.params.id);
+    this.getScheduleMovie(this.$route.params.id);
   },
   methods: {
+    getMovieDetail(movieId){
+        axios.get('https://localhost:7071/api/Movies/get-movie-details?id=' + movieId).then(response => {
+            this.movieDetail = response.data;
+            this.movieDetail.thumbnail = this.baseUrl + this.movieDetail.thumbnail;
+            this.movieDetail.poster = this.baseUrl + this.movieDetail.poster;
+            this.movieDetail.trailer = this.baseUrl + this.movieDetail.trailer;
+            this.movieDetail.logo = this.baseUrl + this.movieDetail.logo;
+            this.movieDetail.casts.forEach(cast => {
+                cast.castImage = this.baseUrl + cast.castImage;
+            });
+            this.movieDetail.directors.forEach(director => {
+                director.directorImage = this.baseUrl + director.directorImage;
+            });
+        });
+    },
+    getScheduleMovie(movieId){
+        axios.get('https://localhost:7071/api/Schedules/get-schedules-by-movie?movieId=' + movieId).then(response => {
+            this.scheduleMovie = response.data;
+            console.log(this.scheduleMovie);
+        });
+    },
     toggleSound() {
       const trailer = document.getElementById('trailerVideo');
       trailer.muted = !trailer.muted;
@@ -348,6 +322,7 @@ export default {
             }
         });
     },
+    
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.setElementHeights); // Loại bỏ lắng nghe sự kiện trước khi component bị hủy
