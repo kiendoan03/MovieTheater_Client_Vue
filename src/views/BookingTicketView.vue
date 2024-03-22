@@ -258,7 +258,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                     <div class="row  mb-3">
                         <RouterLink :to="'/movieDetail/' + model.schedule.movieId" class="text-decoration-none mt-3">
                             <span class="border rounded-pill text-light text-center px-3 py-2 fs-5" style="cursor: pointer;">
-                                    <i class="fa-solid fa-left-long me-2"></i>  Back 
+                                <font-awesome-icon :icon="['fas', 'backward']" style="color: #ffffff;" />  Back 
                             </span>
                         </RouterLink>
                     </div>
@@ -306,7 +306,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
                 </div>
                 <div class="d-inline">
-                        <button type="button" @click="bookingTicket()" class="btn btn-danger shadow-none mx-5" name="redirect"><i class="fa-solid fa-ticket me-2" style="color: #f7f7f7;"></i>Payment</button>
+                        <button type="button" @click="bookingTicket()" class="btn btn-danger shadow-none mx-5" name="redirect"><font-awesome-icon :icon="['fas', 'credit-card']" style="color: #eceff4;" /> Payment</button>
                 </div>
 
             </div>

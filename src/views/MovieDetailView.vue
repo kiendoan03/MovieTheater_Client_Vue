@@ -90,10 +90,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
             <!-- Option -->
             <div class="mt-4">
                 <span class="border rounded-pill text-light text-center px-3 py-2 fs-5" @click="toDetailedPage"  style="cursor: pointer;">
-                    <i class="fa-solid fa-circle-info me-1"></i>  More 
+                    <font-awesome-icon :icon="['fas', 'circle-info']" style="color: #ffffff;" />  More 
                 </span>
                 <span class="border rounded-pill text-light text-center mx-3 px-3 py-2 fs-5" @click="toBookTickerPage" style="cursor: pointer;">
-                    <i class="fa-solid fa-ticket" style="color: #ffffff;"></i>  Book Tickets 
+                    <font-awesome-icon :icon="['fas', 'ticket']" style="color: #ffffff;" />  Book Tickets 
                 </span>
             </div>
 
@@ -111,7 +111,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 <!-- Back Button -->
 <div class="" style="margin-top: 5.5vmax;">
     <span @click="toOverviewPage" class="border rounded-pill text-light text-center px-3 py-2 fs-5" style="cursor: pointer;">
-        <i class="fa-solid fa-backward"></i>  Back 
+        <font-awesome-icon :icon="['fas', 'backward']" class="mt-5"style="color: #ffffff;" />  Back 
     </span>
 </div>
 
@@ -131,7 +131,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         </span>
 
         <span class="border rounded-pill text-light text-center mx-2 px-3 py-2 fs-5" @click="toBookTickerPage" style="cursor: pointer;">
-                <i class="fa-solid fa-ticket" style="color: #ffffff;"></i>  Book Tickets 
+            <font-awesome-icon :icon="['fas', 'ticket']" style="color: #ffffff;" />  Book Tickets 
         </span>
         <p class="text-light mt-4">
            {{this.movieDetail.synopsis}}
@@ -213,7 +213,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 <section id="book__ticket" class="row full-height-ticket px-5" ref="ticket">
   <section class=" full-height" >
       <span  @click="toDetailedPage" class="border rounded-pill text-light text-center px-3 py-2 fs-5" style="cursor: pointer;">
-              <i class="fa-solid fa-backward"></i>  Back 
+        <font-awesome-icon :icon="['fas', 'backward']" class="mt-5"style="color: #ffffff;" />  Back 
       </span>
       <div v-for="schedule in this.scheduleMovie" :key="schedule.id"  class="col-10 d-flex flex-wrap mx-auto hide-scrollbar mt-2 mb-5" style="height: 85%; overflow-x: hidden; overflow-y: scroll;">
           <div class="card bg-dark text-light col-3 me-5 mx-5 py-3 mt-3 px-5 text-center" style="border-radius: 1vmax; height: 40%;">
@@ -226,7 +226,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                   <h4 class="card-title mb-3">{{schedule.scheduleDate}}</h4>
                   <p class="card-text fs-5"><b>Start time:</b> {{ schedule.startTime }}</p>
                   <p class="card-text fs-5"><b>End time:</b> {{schedule.endTime}}</p>
-                  <RouterLink :to="'/bookingTicket/' + schedule.id" class="btn btn-danger mt-3 py-2 px-5 border border-0 rounded-pill">Booking ticket</RouterLink>
+                  <RouterLink :to="'/bookingTicket/' + schedule.id" class="btn btn-danger mt-3 py-2 px-5 border border-0 rounded-pill"> <font-awesome-icon :icon="['fas', 'ticket']" style="color: #ffffff;" /> Booking ticket</RouterLink>
               </div>
           </div>
       </div>
@@ -270,6 +270,7 @@ export default {
             this.movieDetail.poster = this.baseUrl + this.movieDetail.poster;
             this.movieDetail.trailer = this.baseUrl + this.movieDetail.trailer;
             this.movieDetail.logo = this.baseUrl + this.movieDetail.logo;
+            this.movieDetail.releaseDate = new Date(this.movieDetail.releaseDate).getFullYear();
             this.movieDetail.casts.forEach(cast => {
                 cast.castImage = this.baseUrl + cast.castImage;
             });
