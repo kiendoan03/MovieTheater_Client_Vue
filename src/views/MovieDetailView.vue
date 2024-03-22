@@ -1,7 +1,12 @@
 <script setup>
 import axios from 'axios';
 import { RouterLink } from 'vue-router';
+import router from '@/router';
+import { library } from '@fortawesome/fontawesome-svg-core'
+    import { fas } from '@fortawesome/free-solid-svg-icons'
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+    library.add(fas)
 
 </script>
 <template>
@@ -13,8 +18,9 @@ import { RouterLink } from 'vue-router';
 
 <section class="p-0 top-0 start-0 bottom-0 end-0">
     <div>
-        <video style="object-fit: cover; backdrop-filter: brightness(60%);" class="full-screen-element col-12" id="trailerVideo" oncontextmenu="return false;" autoplay muted loop disablePictureInPicture>
-            <source :src ="this.movieDetail.trailer">
+        <video style="object-fit: cover; backdrop-filter: brightness(60%);"  :src="movieDetail.trailer" class="full-screen-element col-12" id="trailerVideo" muted loop autoplay oncontextmenu="return false;"  disablePictureInPicture>
+            <!-- <source :src ="this.movieDetail.trailer"> -->
+            <!-- <source src="https://localhost:7071/uploads/videos/movieTrailers/da61bf1a-4a62-4ee6-a524-d7bab2e3d283_The%20Nun%20II.mp4"> -->
         </video>
     </div>
 </section>
@@ -30,7 +36,7 @@ import { RouterLink } from 'vue-router';
         <div class="row mt-5">
             <div class="col-12 d-flex justify-content-center">
                 <div class="col-1 text-center">
-                    <span class="border text-light p-2 rounded-2"> {{this.movieDetail.ageRestricted}} +</span>
+                    <span class="border text-light p-2 rounded-2"> {{this.movieDetail.ageRestricted}} + </span>
                 </div>
                 <div class="col-1 text-center">
                     <span class="text-light p-2">{{this.movieDetail.releaseDate}}</span>
@@ -76,7 +82,7 @@ import { RouterLink } from 'vue-router';
                 <!-- Sound Button -->
                 <div @click="toggleSound" class="col-1">
                     <div ref="soundButton" class="sound-button d-inline-block text-light position-relative top-50 start-50 translate-middle" style="font-size: 1.5em; cursor: pointer;">
-                      <i class="fas" :class="soundIcon"></i> sound
+                      <font-awesome-icon :icon="soundIcon" style="color: #ffffff;" />
                     </div>
                 </div>
             </div>
@@ -235,7 +241,7 @@ export default {
       overviewPage: 0,
       detailedPage: 0,
       BookTickerPage: 0,
-      isMuted: false,
+      isMuted: true,
       movieDetail: [],
       scheduleMovie: [],
       baseUrl: "https://localhost:7071",
@@ -280,12 +286,13 @@ export default {
     },
     toggleSound() {
       const trailer = document.getElementById('trailerVideo');
-      trailer.muted = !trailer.muted;
+      this.isMuted = !this.isMuted;
+        trailer.muted = this.isMuted;
       if (trailer.muted) {
-        this.$refs.soundButton.innerHTML = '<i class="fas fa-volume-xmark"></i> sound';
-      } else {
-        this.$refs.soundButton.innerHTML = '<i class="fas fa-volume-high"></i> sound';
-      }
+         this.$refs.soundButton.$props.icon = ['fas', 'volume-xmark'];
+        } else {
+            this.$refs.soundButton.$props.icon = ['fas', 'volume-high'];
+        }
     },
     toOverviewPage() {
       console.log('toOverviewPage');
@@ -330,7 +337,7 @@ export default {
   },
   computed: {
     soundIcon() {
-      return this.isMuted ? "fa-volume-xmark" : "fa-volume-high";
+        return this.isMuted ? ['fas', 'volume-xmark'] : ['fas', 'volume-high'];
     }
   },
 };
