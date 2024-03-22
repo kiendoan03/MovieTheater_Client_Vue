@@ -216,10 +216,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         <font-awesome-icon :icon="['fas', 'backward']" class="mt-5"style="color: #ffffff;" />  Back 
       </span>
       <div v-for="schedule in this.scheduleMovie" :key="schedule.id"  class="col-10 d-flex flex-wrap mx-auto hide-scrollbar mt-2 mb-5" style="height: 85%; overflow-x: hidden; overflow-y: scroll;">
-          <div class="card bg-dark text-light col-3 me-5 mx-5 py-3 mt-3 px-5 text-center" style="border-radius: 1vmax; height: 40%;">
+          <div class="card bg-dark text-light col-3 me-5 mx-5 py-3 mt-3 px-5 text-center" style="border-radius: 1vmax; height: 45%;">
               <div class="card-header text-danger">
-                  <h2 class="mb-0 fw-bolder">
-                      {{schedule.room.roomName}}
+                  <h2 v-if="schedule.room.roomTypeId == 1" class="mb-0 fw-bolder">
+                      {{schedule.room.roomName}}  <h3>Economy Class</h3>
+                  </h2>
+                  <h2 v-if="schedule.room.roomTypeId == 2" class="mb-0 fw-bolder">
+                      {{schedule.room.roomName}}  <h3>Gold Class</h3>
                   </h2>
               </div>
               <div class="card-body">

@@ -226,7 +226,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                                 </button>
                                 <button @click="orderTicket(seat.id, this.model.auth)" v-if=" seat.status == 1 && seat.customerId == this.model.auth" type="button"  class="btn btn-none shadow-none col-12">
                                     <div class="col-12 text-center mb-5">
-                                        <font-awesome-icon :icon="['fas', 'couch']" size="2xl" style="color: #63E6BE;" />
+                                        <font-awesome-icon :icon="['fas', 'couch']" size="2xl" style="color: rgb(64, 192, 87);" />
                                     </div>
                                 </button>
                                 <button v-if=" seat.status == 1 && seat.customerId != this.model.auth" type="button" disabled  class="btn btn-none border-0 shadow-none col-12">
@@ -236,7 +236,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                                 </button>
                                 <button v-if="seat.status == 2 && seat.customerId == this.model.auth" disabled class="btn btn-none border-0 shadow-none col-12">
                                     <div class="col-12 text-center mb-5">
-                                        <font-awesome-icon :icon="['fas', 'couch']" size="2xl"  style="color: #63E6BE;" />
+                                        <font-awesome-icon :icon="['fas', 'couch']" size="2xl"  style="color: rgb(64, 192, 87);" />
                                     </div>
                                 </button>
                                 <button v-if="seat.status == 2 && seat.customerId != this.model.auth" disabled class="btn btn-none border-0 shadow-none col-12">
