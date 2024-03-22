@@ -215,8 +215,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
       <span  @click="toDetailedPage" class="border rounded-pill text-light text-center px-3 py-2 fs-5" style="cursor: pointer;">
         <font-awesome-icon :icon="['fas', 'backward']" class="mt-5"style="color: #ffffff;" />  Back 
       </span>
-      <div v-for="schedule in this.scheduleMovie" :key="schedule.id"  class="col-10 d-flex flex-wrap mx-auto hide-scrollbar mt-2 mb-5" style="height: 85%; overflow-x: hidden; overflow-y: scroll;">
-          <div class="card bg-dark text-light col-3 me-5 mx-5 py-3 mt-3 px-5 text-center" style="border-radius: 1vmax; height: 45%;">
+      <div class="col-10 d-flex flex-wrap mx-auto hide-scrollbar mt-2 mb-5" style="height: 85%; overflow-x: hidden; overflow-y: scroll;">
+          <div v-for="schedule in this.scheduleMovie" :key="schedule.id"  class="card bg-dark text-light col-3 me-5 mx-5 py-3 mt-3 px-5 text-center" style="border-radius: 1vmax; height: 45%;">
               <div class="card-header text-danger">
                   <h2 v-if="schedule.room.roomTypeId == 1" class="mb-0 fw-bolder">
                       {{schedule.room.roomName}}  <h3>Economy Class</h3>
@@ -248,6 +248,7 @@ export default {
       movieDetail: [],
       scheduleMovie: [],
       baseUrl: "https://localhost:7071",
+      today: new Date().toISOString().split('T')[0],
     };
   },
   mounted() {
@@ -284,8 +285,15 @@ export default {
     },
     getScheduleMovie(movieId){
         axios.get('https://localhost:7071/api/Schedules/get-schedules-by-movie?movieId=' + movieId).then(response => {
-            this.scheduleMovie = response.data;
-            console.log(this.scheduleMovie);
+        //    this.scheduleMovie = response.data;
+           response.data.forEach(schedule => {
+            if(this.formatDate(schedule.scheduleDate) < this.today) {
+                return;
+            } else {
+                this.scheduleMovie.push(schedule);
+            }
+        });
+           console.log(this.scheduleMovie); 
         });
     },
     toggleSound() {
@@ -333,6 +341,10 @@ export default {
             }
         });
     },
+    formatDate(dateString) {
+      const [day, month, year] = dateString.split('/');
+      return `${year}-${month}-${day}`;
+      },
     
   },
   beforeDestroy() {
