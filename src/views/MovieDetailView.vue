@@ -259,7 +259,8 @@ export default {
     this.$data.overviewPage = overviewPage;
     this.$data.detailedPage = detailedPage;
     this.$data.ticketPage = ticketPage;
-    window.addEventListener('resize', this.setElementHeights);
+    // window.addEventListener('resize', this.setElementHeights);
+    this.toOverviewPage();
     this.setElementHeights();
     document.body.style.overflow = "hidden";
     this.movieId = this.$route.params.id;
