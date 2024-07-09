@@ -306,7 +306,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
                 </div>
                 <div class="d-inline">
-                        <button type="button" @click="bookingTicket()" class="btn btn-danger shadow-none mx-5" name="redirect"><font-awesome-icon :icon="['fas', 'credit-card']" style="color: #eceff4;" /> Payment</button>
+                        <button type="button" @click="payment()" class="btn btn-danger shadow-none mx-5" :class="{ disable: this.model.total === 0 }"name="redirect"><font-awesome-icon :icon="['fas', 'credit-card']" style="color: #eceff4;" /> Payment</button>
                 </div>
 
             </div>
@@ -401,8 +401,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                 this.model.total = 0;
                 this.getTickets(this.$route.params.id);
             }, 5000); 
-            this.bookingTicket();
+            // this.bookingTicket();
+        },
+        created(){
             this.isAuth();
+            this.checkUrlParams();
         },
         methods: {
             isAuth() {
@@ -441,7 +444,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
             },
             orderTicket(ticketId, cusId){
                 axios.put(`https://localhost:7071/api/Tickets/${ticketId}?cusId=${cusId}`).then(response => {
-                    console.log(response.data);
                     this.$nextTick(() => {
                         this.model.total = 0;
                         this.getTickets(this.$route.params.id);
@@ -455,16 +457,55 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                 // this.$router.push({ name: 'PaymentView', params: { scheduleId: this.$route.params.id } });
                 axios.put(`https://localhost:7071/api/Tickets/booking-tickets?cusId=${this.model.auth}`).then(response => {
                     console.log(response.data);
-                    // this.$router.push({ name: 'PaymentView', params: { scheduleId: this.$route.params.id } });
+                     this.$router.push({ path: '/bookingTicket/' + this.$route.params.id});
                 }).catch(error => {
                     console.error('Error booking ticket:', error);
                 });
+            },
+            checkUrlParams() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const code = urlParams.get('code');
+                const id = urlParams.get('id');
+                const cancel = urlParams.get('cancel');
+                const status = urlParams.get('status');
+                const orderCode = urlParams.get('orderCode');
+
+                if (code && id && cancel !== null && status && orderCode) {
+                    if(cancel == 'false'){
+                        console.log('Success');
+                        this.bookingTicket();
+                    }else{
+                        this.$router.push({ path: '/bookingTicket/' + this.$route.params.id});
+                        console.log('Cancel');
+                    }
+                }
+                },
+            payment(){
+                const validTickets = this.model.tickets.filter(ticket => 
+                    ticket.status == 1 && ticket.customerId == this.model.auth
+                );
+
+                const paymentData = {
+                    tickets: validTickets,
+                    totalPrice: this.model.total,
+                    scheduleId: parseInt(this.$route.params.id),
+                };
+                axios.post('https://localhost:7071/create-payment-link', paymentData)
+                    .then(response => {
+                        window.location.href = response.data.checkoutUrl;
+                    })
+                    .catch(error => {
+                        console.error('Error booking ticket:', error);
+                    });
             }
         },
     }
 
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.disable {
+    opacity: 0.5; 
+    pointer-events: none;
+}
 </style>
