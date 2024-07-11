@@ -416,25 +416,30 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                 }
                 console.log(this.model.auth);
             },
-            getTickets(scheduleId) {
-                axios.get(`https://localhost:7071/api/Tickets/get-tickets-by-schedule?scheduleId=${scheduleId}`).then(response => {
-                this.model.tickets = response.data;  
-                if(this.model.tickets.length > 0){
-                    this.model.tickets.forEach(ticket => {
-                        if(ticket.status == 1 && ticket.customerId == this.model.auth){
-                           this.model.total += ticket.finalPrice; 
-                        }
-                    });
+            async getTickets(scheduleId) {
+                console.log('abccdc',scheduleId);
+                try {
+                    const response = await axios.get(`https://localhost:7071/api/Tickets/get-tickets-by-schedule?scheduleId=${scheduleId}`);
+                    this.model.tickets = response.data;
+                    console.log('res', response);
+
+                    if (this.model.tickets.length > 0) {
+                        this.model.total = 0; // Reset total before calculating
+                        this.model.tickets.forEach(ticket => {
+                            if (ticket.status == 1 && ticket.customerId == this.model.auth) {
+                                this.model.total += ticket.finalPrice;
+                            }
+                        });
+                    }
+
+                    console.log(this.model.total);
+                } catch (error) {
+                    console.error('Error fetching tickets:', error);
                 }
-               
-                console.log(this.model.total);
-            }).catch(error => {
-                console.error('Error fetching tickets:', error);
-            });        
             },
-            getSchedule(scheduleId) {
-                axios.get(`https://localhost:7071/api/Schedules/get-schedule-with-detail?scheduleId=${scheduleId}`).then(response => {
-                console.log(response.data);
+            async getSchedule(scheduleId) {
+                await axios.get(`https://localhost:7071/api/Schedules/get-schedule-with-detail?scheduleId=${scheduleId}`).then(response => {
+                console.log('hahahaah',response.data);
                 this.model.schedule = response.data;
                 this.model.schedule.movie.poster = this.model.baseUrl + this.model.schedule.movie.poster;
                 console.log(this.model.schedule.movie.poster);
@@ -462,7 +467,38 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                     console.error('Error booking ticket:', error);
                 });
             },
-            checkUrlParams() {
+            async sendEmail(){
+                const validTickets = await this.model.tickets.filter(ticket => 
+                    ticket.status == 1 && ticket.customerId == this.model.auth
+                );
+                const paymentData = {
+                    // customerEmail: 'kiendoan8521349@gmail.com',
+                    customerEmail: localStorage.getItem('email'),
+                    totalPrice: this.model.total,
+                    tickets: JSON.parse(JSON.stringify(validTickets)),
+                    schedule: JSON.parse(JSON.stringify(this.model.schedule))
+                };
+                console.log('asd', this.model.schedule);
+                console.log('ticket',paymentData.tickets);
+                console.log('schedule',paymentData.schedule);
+                console.log('data',paymentData);
+                await axios.post('https://localhost:7071/payment-success', paymentData).then(response => {
+                    console.log(response.data);
+                }).catch(error => {
+                    console.error('Error send email:', error);
+                });
+                // await axios.post('https://localhost:7071/send-payment-success', paymentData).then(response => {
+                //     console.log(response.data);
+                // }).catch(error => {
+                //     console.error('Error send email:', error);
+                // });
+                // await axios.post('https://localhost:7071/api/Email/SendPaymentSuccess', paymentData).then(response => {
+                //     console.log(response.data);
+                // }).catch(error => {
+                //     console.error('Error send email:', error);
+                // });
+            },
+            async checkUrlParams() {
                 const urlParams = new URLSearchParams(window.location.search);
                 const code = urlParams.get('code');
                 const id = urlParams.get('id');
@@ -473,13 +509,16 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                 if (code && id && cancel !== null && status && orderCode) {
                     if(cancel == 'false'){
                         console.log('Success');
+                        await this.getTickets(this.$route.params.id);
+                        await this.getSchedule(this.$route.params.id);
+                        await this.sendEmail();
                         this.bookingTicket();
                     }else{
                         this.$router.push({ path: '/bookingTicket/' + this.$route.params.id});
                         console.log('Cancel');
                     }
                 }
-                },
+            },
             payment(){
                 const validTickets = this.model.tickets.filter(ticket => 
                     ticket.status == 1 && ticket.customerId == this.model.auth

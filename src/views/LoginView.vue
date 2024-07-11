@@ -69,6 +69,7 @@ import axios from 'axios'
                         localStorage.setItem('token', response.data.token);
                         localStorage.setItem('role', response.data.role);
                         localStorage.setItem('id', response.data.id);
+                        localStorage.setItem('email', response.data.email);
                     }
                 }).catch(error => {
                     console.log(error);
