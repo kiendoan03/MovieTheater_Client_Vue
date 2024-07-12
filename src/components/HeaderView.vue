@@ -28,6 +28,7 @@
                         <img class="col-12 border" style="border-radius: 50%;object-fit: cover; overflow: hidden;height: 3vmax; width: 3vmax;" src="../assets/image/Netflix-avt.png" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" height="" alt="">
                             <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton1"> 
                                 <li><RouterLink v-if="!auth" class="dropdown-item bg-dark text-light" to="/login"><font-awesome-icon :icon="['fas', 'right-to-bracket']" style="color: #ffffff;" /> Login</RouterLink></li>
+                                <li><RouterLink v-if="auth" class="dropdown-item bg-dark text-light" to="/user"><font-awesome-icon :icon="['fas', 'user']" style="color: #ffffff;" /> {{ username }}</RouterLink></li>
                                 <li><Button v-if="auth" @click="logout" class="dropdown-item bg-dark text-light"><font-awesome-icon :icon="['fas', 'right-from-bracket']" style="color: #ffffff;" /> Logout</Button></li>
                             </ul>
                     </div>  
@@ -40,6 +41,7 @@
         data: function() {
         return {
             auth: false,
+            username: localStorage.getItem('name')
         }
     },
     mounted() {
@@ -50,7 +52,11 @@
         logout() {
             localStorage.removeItem('token');
             localStorage.removeItem('role');
+            localStorage.removeItem('id');
+            localStorage.removeItem('email');
+            localStorage.removeItem('name');
             this.$router.push('/');
+            this.auth = false;
         }
     }
 }

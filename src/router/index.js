@@ -4,6 +4,7 @@ import MovieDetailView from '../views/MovieDetailView.vue'
 import BookingTicketView from '../views/BookingTicketView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import UserView from '@/views/UserView.vue'
 
 const router = createRouter({
     history: createWebHistory(
@@ -32,6 +33,11 @@ const router = createRouter({
             path: '/register',
             name: 'register',
             component: RegisterView
+        },
+        {
+            path: '/user',
+            name: 'user',
+            component: UserView
         }
     ]
 })

@@ -55,7 +55,8 @@ import axios from 'axios'
                         password: '',
                         role: '',
                         id: ''
-                    }
+                    },
+                    auth: null,
                 }
             }
         },
@@ -65,11 +66,13 @@ import axios from 'axios'
                     if(response.data.role == 'Customer' ) {
                         console.log(response.data);
                         alert('Login successfully');
-                        this.$router.push('/');
+                        // this.$router.push('/');
+                        window.location.href = '/';
                         localStorage.setItem('token', response.data.token);
                         localStorage.setItem('role', response.data.role);
                         localStorage.setItem('id', response.data.id);
                         localStorage.setItem('email', response.data.email);
+                        localStorage.setItem('name', response.data.name);
                     }
                 }).catch(error => {
                     console.log(error);
