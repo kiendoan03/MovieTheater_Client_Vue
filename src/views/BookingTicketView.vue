@@ -365,6 +365,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 <script>
     import axios from 'axios';
     import { RouterLink } from 'vue-router';
+  import * as signalR from "@aspnet/signalr";
+
     export default {
         name: 'BookingTicketView',
         data() {
@@ -390,31 +392,60 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                     total : 0,
                     baseUrl: 'https://localhost:7071',
                     auth: null,
-                }
+                },
+                connection: null,
             }
         },
         mounted() {
             this.scheduleId = this.$route.params.id;
             this.getTickets(this.$route.params.id);
             this.getSchedule(this.$route.params.id);
-            setInterval(() => {
-                this.model.total = 0;
-                this.getTickets(this.$route.params.id);
-            }, 5000); 
+            // setInterval(() => {
+            //     this.model.total = 0;
+            //     this.getTickets(this.$route.params.id);
+            // }, 5000); 
             // this.bookingTicket();
         },
         created(){
             this.isAuth();
             this.checkUrlParams();
+            this.initSignalRConnection();
         },
         methods: {
+            initSignalRConnection() {
+                this.connection = new signalR.HubConnectionBuilder()
+                    .withUrl("https://localhost:7071/bookticketHub")
+                    .build();
+
+                this.connection.start().then(() => {
+                    console.log("Connected to SignalR Hub");
+                    this.listenForBookTicket();
+                    this.listenForOderTicket();
+                }).catch((error) => {
+                    console.error("Error connecting to SignalR Hub: ", error);
+                });
+            },
+            listenForOderTicket() {
+                console.log("Listening for order");
+                this.connection.on("orderTicket", () => {
+                    this.model.total = 0;
+                    this.getTickets(this.$route.params.id);
+                });
+            },
+            listenForBookTicket() {
+                console.log("Listening for bookingTicket");
+                this.connection.on("bookingTicket", () => {
+                    this.model.total = 0;
+                    this.getTickets(this.$route.params.id);
+                });
+            },
             isAuth() {
-                if(localStorage.getItem('token') == null){
-                    this.$router.push({ name: 'LoginView' });
-                }else if(localStorage.getItem('role') == 'Customer' && localStorage.getItem('token') != null){
-                    this.model.auth = localStorage.getItem('id');
+                if(localStorage.getItem('token_cus') == null && localStorage.getItem('role_cus') != 'Customer'){
+                    this.$router.push('/login');
+                }else if(localStorage.getItem('role_cus') == 'Customer' && localStorage.getItem('token_cus') != null){
+                    this.model.auth = localStorage.getItem('id_cus');
                 }
-                console.log(this.model.auth);
+                console.log('akdah',this.model.auth);
             },
             async getTickets(scheduleId) {
                 console.log('abccdc',scheduleId);
@@ -473,7 +504,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                 );
                 const paymentData = {
                     // customerEmail: 'kiendoan8521349@gmail.com',
-                    customerEmail: localStorage.getItem('email'),
+                    customerEmail: localStorage.getItem('email_cus'),
                     totalPrice: this.model.total,
                     tickets: JSON.parse(JSON.stringify(validTickets)),
                     schedule: JSON.parse(JSON.stringify(this.model.schedule))

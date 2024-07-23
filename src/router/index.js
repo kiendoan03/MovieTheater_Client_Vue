@@ -5,6 +5,7 @@ import BookingTicketView from '../views/BookingTicketView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import UserView from '@/views/UserView.vue'
+import SearchView from '@/views/SearchView.vue'
 
 const router = createRouter({
     history: createWebHistory(
@@ -38,6 +39,11 @@ const router = createRouter({
             path: '/user',
             name: 'user',
             component: UserView
+        },
+        {
+            path: '/search',
+            name: 'search',
+            component: SearchView
         }
     ]
 })

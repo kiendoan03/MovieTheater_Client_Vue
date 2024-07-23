@@ -169,7 +169,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         imageUrl: '',
         isEditMode: false,
         user: {},
-        userId: localStorage.getItem('id'),
+        userId: localStorage.getItem('id_cus'),
         baseUrl: 'https://localhost:7071',
         re_password:'',
         new_password: '',
@@ -214,7 +214,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         getUserById(id){
             axios.get(`https://localhost:7071/api/Customers/${id}`,{
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                    Authorization: `Bearer ${localStorage.getItem('token_cus')}`
                 }
             }).then(response => {
                 this.user = response.data;
@@ -227,7 +227,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         getRooms() {
             axios.get(`https://localhost:7071/api/Rooms`, {
                 headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${localStorage.getItem('token_cus')}`
                 }
             }).then(response => {
                 this.rooms = response.data;
@@ -242,7 +242,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         countTicketBought(id) {
             axios.get(`https://localhost:7071/api/Customers/count-tickets-bought?cusId=${id}`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                    Authorization: `Bearer ${localStorage.getItem('token_cus')}`
                 }
             }).then(response => {
                 this.ticketBought = response.data;
@@ -253,7 +253,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         getTicketsByCustomer(id){
             axios.get(`https://localhost:7071/api/Tickets/get-tickets-by-customer?cusId=${id}`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                    Authorization: `Bearer ${localStorage.getItem('token_cus')}`
                 }
             }).then(response => {
                 this.tickets = response.data;
@@ -282,7 +282,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         formData.append('id', this.user.id);
         axios.put(`https://localhost:7071/api/Customers/${this.userId}`, formData, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${localStorage.getItem('token_cus')}`
             }
         }).then(response => {
             alert('Update successfully');
@@ -294,11 +294,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         this.isEditMode = false;
       },
       logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('role');
-            localStorage.removeItem('id');
-            localStorage.removeItem('email');
-            localStorage.removeItem('name');
+            localStorage.removeItem('token_cus');
+            localStorage.removeItem('role_cus');
+            localStorage.removeItem('id_cus');
+            localStorage.removeItem('email_cus');
+            localStorage.removeItem('name_cus');
             // this.$router.push('/');
             window.location.href = '/';
         },

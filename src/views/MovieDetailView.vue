@@ -229,7 +229,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                   <h4 class="card-title mb-3">{{schedule.scheduleDate}}</h4>
                   <p class="card-text fs-5"><b>Start time:</b> {{ schedule.startTime }}</p>
                   <p class="card-text fs-5"><b>End time:</b> {{schedule.endTime}}</p>
-                  <RouterLink :to="'/bookingTicket/' + schedule.id" class="btn btn-danger mt-3 py-2 px-5 border border-0 rounded-pill"> <font-awesome-icon :icon="['fas', 'ticket']" style="color: #ffffff;" /> Booking ticket</RouterLink>
+                  <RouterLink :to="'/bookingTicket/' + schedule.id" class="btn btn-danger mt-3 py-2 px-5 border border-0 rounded-pill" :class="{disable : !isAuth }"> <font-awesome-icon :icon="['fas', 'ticket']" style="color: #ffffff;" /> Booking ticket</RouterLink>
               </div>
           </div>
       </div>
@@ -249,6 +249,7 @@ export default {
       scheduleMovie: [],
       baseUrl: "https://localhost:7071",
       today: new Date().toISOString().split('T')[0],
+      isAuth: false,
     };
   },
   mounted() {
@@ -266,6 +267,10 @@ export default {
     this.movieId = this.$route.params.id;
     this.getMovieDetail(this.$route.params.id);
     this.getScheduleMovie(this.$route.params.id);
+  },
+  created() {
+    this.isAuth = localStorage.getItem('role_cus') == 'Customer' && localStorage.getItem('token_cus') != null;
+    console.log(this.isAuth);
   },
   methods: {
     getMovieDetail(movieId){
@@ -359,3 +364,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+.disable {
+  pointer-events: none;
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+</style>

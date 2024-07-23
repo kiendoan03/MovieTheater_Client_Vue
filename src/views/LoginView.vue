@@ -68,11 +68,14 @@ import axios from 'axios'
                         alert('Login successfully');
                         // this.$router.push('/');
                         window.location.href = '/';
-                        localStorage.setItem('token', response.data.token);
-                        localStorage.setItem('role', response.data.role);
-                        localStorage.setItem('id', response.data.id);
-                        localStorage.setItem('email', response.data.email);
-                        localStorage.setItem('name', response.data.name);
+                        localStorage.setItem('token_cus', response.data.token);
+                        localStorage.setItem('role_cus', response.data.role);
+                        localStorage.setItem('id_cus', response.data.id);
+                        localStorage.setItem('email_cus', response.data.email);
+                        localStorage.setItem('name_cus', response.data.name);
+                    }
+                    else {
+                        alert('Login failed');
                     }
                 }).catch(error => {
                     console.log(error);

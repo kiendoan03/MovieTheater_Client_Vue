@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="position-relative border border-0 me-2 rounded-circle text-center" style="height: 3vmax; width: 3vmax; background-color: #ffffff48;">
-                    <a href="#">
+                    <a href="/search">
                         <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="position-absolute top-50 start-50 translate-middle" style="font-size: 1.2vmax;color: #ffffff;" />
                     </a>
                 </div>
@@ -41,20 +41,20 @@
         data: function() {
         return {
             auth: false,
-            username: localStorage.getItem('name')
+            username: localStorage.getItem('name_cus')
         }
     },
     mounted() {
-        this.auth = localStorage.getItem('role') == 'Customer' && localStorage.getItem('token') != null;
+        this.auth = localStorage.getItem('role_cus') == 'Customer' && localStorage.getItem('token_cus') != null;
         console.log(this.auth);
     },
     methods: {
         logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('role');
-            localStorage.removeItem('id');
-            localStorage.removeItem('email');
-            localStorage.removeItem('name');
+            localStorage.removeItem('token_cus');
+            localStorage.removeItem('role_cus');
+            localStorage.removeItem('id_cus');
+            localStorage.removeItem('email_cus');
+            localStorage.removeItem('name_cus');
             this.$router.push('/');
             this.auth = false;
         }
