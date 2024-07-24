@@ -17,6 +17,32 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                         <div class="text-center my-3 rounded-3">
                             <div class=" position-relative mx-auto" style="width: 9vmax; ">
                                 <img :src="baseUrl + user.image" style="border-radius: 50%;object-fit: cover; overflow: hidden; height: 8vmax; width: 8vmax;" alt=" ">
+                                <div class="edit position-absolute top-100 start-100 translate-middle ">
+                                    <button type="button" class="btn btn-none shadow-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                        <font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff; font-size: 1.2vmax; cursor: pointer;" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content text-light" style="background-color: black;">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Change avatar</h5>
+                                            <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close">
+                                                <font-awesome-icon :icon="['fas', 'xmark']" style="color: red; font-size: 1.2vmax; cursor: pointer;" />
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="form-control bg-dark border-0 shadow-none text-light" type="file" id="image" name="cus_img" accept="image/png, image/jpg, image/jpeg" @change="show_img">
+                                            <div class="row my-3">
+                                                <img id="cus_img" ref="previewImage" class=" rounded-3 object-fit-cover mx-auto" :src="imageUrl" style="border-radius: 50%;object-fit: cover; overflow: hidden; width: 20vmax;" />
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button @click="saveChanges" class="btn btn-danger">Change</button>
+                                        </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body ">
@@ -67,7 +93,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                                             <div class="mb-3 row ">
                                                 <label class="col-sm-2 col-form-label text-light ">Date of birth</label>
                                                 <div class="col-sm-10 ">
-                                                    <input type="date" :readonly="!isEditMode" name="cus_dateOfBirth" class="form-control-plaintext text-light " v-model="formattedDob" >
+                                                    <input type="date" :readonly="!isEditMode" name="cus_dateOfBirth" class="form-control-plaintext text-light " v-model="user.dob" >
                                                 </div>
                                             </div>
                                             <div class="mb-3 row ">
@@ -178,31 +204,17 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         currentPage: 1,
         pageSize: 5,
         totalPages: 1,
-        rooms:[]
+        rooms:[],
       };
     },
     created() {
+        this.isAuth();
       this.getUserById(this.userId);
       this.countTicketBought(this.userId);
       this.getTicketsByCustomer(this.userId);
       this.getRooms();
     },
     computed: {
-        formattedDob: {
-            get() {
-                if (!this.user.dob) return '';
-                const [month, day, year] = this.user.dob.split('/');
-                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-            },
-            set(newValue) {
-                if (!newValue) {
-                this.user.dob = '';
-                return;
-                }
-                const [year, month, day] = newValue.split('-');
-                this.user.dob = `${month}/${day}/${year}`;
-            }
-        },
         paginatedTickets() {
             const start = (this.currentPage - 1) * this.pageSize;
             const end = start + this.pageSize;
@@ -211,6 +223,29 @@ import { library } from '@fortawesome/fontawesome-svg-core'
     },
    
     methods: {
+        isAuth(){
+            if(localStorage.getItem('token_cus') === null || localStorage.getItem('role_cus') !== 'Customer'){
+                this.$router.push('/login');
+            }
+            // if(localStorage.getItem('id_cus') != this.$route.params.id){
+            //     this.$router.push('/');
+            //     alert('You are not authorized to access this page');
+            // }
+        },
+        formatDate(dateString) {
+            const [day, month, year] = dateString.split('/');
+            return `${year}-${month}-${day}`;
+        },
+        show_img(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                this.$refs.previewImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        },
         getUserById(id){
             axios.get(`https://localhost:7071/api/Customers/${id}`,{
                 headers: {
@@ -220,6 +255,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                 this.user = response.data;
                 console.log(this.user);
                 this.imageUrl = this.baseUrl + this.user.image;
+                this.user.dob = this.formatDate(this.user.dob);
             }).catch(error => {
                 console.log(error);
             })
@@ -271,7 +307,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
             alert('Passwords do not match');
             return;
         }
+        const fileInput = document.getElementById('image');
+        const file = fileInput.files[0];
+
         const formData = new FormData();
+        
         formData.append('name', this.user.name);
         formData.append('username', this.user.username);
         formData.append('email', this.user.email);
@@ -280,12 +320,16 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         formData.append('phoneNumber', this.user.phoneNumber);
         formData.append('passwordHash', this.new_password);
         formData.append('id', this.user.id);
+        if(file){
+            formData.append('file', file);
+        }
         axios.put(`https://localhost:7071/api/Customers/${this.userId}`, formData, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token_cus')}`
             }
         }).then(response => {
             alert('Update successfully');
+            this.getUserById(this.userId);
             this.isEditMode = false;
         }).catch(error => {
             console.log(error);

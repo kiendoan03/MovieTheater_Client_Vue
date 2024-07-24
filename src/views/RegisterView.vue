@@ -133,6 +133,20 @@
         //   alert('Invalid OTP');
         // }
       },
+      //check duplicate customer
+      checkDuplicateCustomer() {
+        axios.get('https://localhost:7071/api/Customers/check-duplicate-customer?username=' + this.customer.username + '&email=' + this.customer.email)
+          .then(response => {
+            // if (response.status === 200) {
+            //   alert('Username or email already exists');
+            //   return ;
+            // }
+            return response.data;
+          })
+          .catch(error => {
+            console.error('Error checking duplicate customer:', error.response.data);
+          });
+      },
       handleRegister() {
         if (!this.customer.username || !this.customer.name || !this.customer.DOB || !this.customer.email || !this.customer.address || !this.customer.phoneNumber || !this.customer.passwordHash || !this.rePassword) {
           alert('All fields are required');
@@ -158,9 +172,14 @@
           alert('Please verify the OTP sent to your email');
           return;
         }
+        // if(this.checkDuplicateCustomer()) {
+        //   alert('Username or email already exists');
+        //   return;
+        // }
         console.log('Registering:', this.customer);
         axios.post('https://localhost:7071/api/Customers/registration', this.customer)
           .then(response => {
+            console.log('Registration response:', response);
             if (response.status === 200) {
               alert('Registration successful');
               this.$router.push('/login'); 
@@ -168,11 +187,12 @@
           })
           .catch(error => {
             console.error('Error during registration:', error.response.data);
-            if (error.response && error.response.data && error.response.data.errors) {
-              alert('Registration failed: ' + JSON.stringify(error.response.data.errors));
-            } else {
-              alert('Registration failed');
-            }
+            alert('Registration failed: ' + error.response.data);
+            // if (error.response && error.response.data && error.response.data.errors) {
+            //   alert('Registration failed: ' + JSON.stringify(error.response.data.errors));
+            // } else {
+            //   alert('Registration failed');
+            // }
           });
       },
       startCountdown() {

@@ -149,17 +149,17 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                                 </button>
                                 <button  v-if="seat.seats.seatTypeId == 3 && seat.status == 1 && seat.customerId != this.model.auth" type="button"  class="btn btn-none border-0 shadow-none col-12">
                                     <div class="col-12 text-center mb-5">
-                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD4klEQVR4nO2aTYwUVRDHGxGDSna3680oBAgEdQkHMHrwkxgPxOABPMCBA8GbKOoBOKAxAic9EA8evZhgvBhjPBgkUQkXXAwZEiRDV3UPVc1uQogJCOtB2ERtUz0fzE6YnZ6e7qEnef/kJbO9LzX1e6/qvdevxnGsrKysrKysrKzusyAIVpXEfwXY35K6hf4GJ4oWt4yePv2gPhvEZuzTjL8yM9Dx6YsuCH1thKJsGv7etK2fM7HJ+B8wfj82U4XBaKNokWH8MTvYersLnK1dI/ST+pya1w1paw5O5QkcgXivpQYG9j4cNWDD9EFqYMN4dPSA8agFTipg3Kkr4MjMcH213pEY8F6C0HvBMJ0tPDDTlPrqJFIULSqxN9m+obuX6WUIgjH996qZmYdB8FRRgUHwlzVhuDSeoCAYi31vP5ywN9narkpXvBXdZhAY/zaCe7XfeIhrjdBcAYHnJuTSmtheiG8D4+1uEVAOq8v1S7/tkRf/uIwb49ETPFE0YBD6QW1NMG1SX3uwfKPHu9meRpn2x8BMxwoHzHSs4dv+3v3xltPP3gZChwsHLHS4nzOD0w/whPhPG8aTRvDnNA2YzhvG4y1gxuPxCwTTVCqbjCc1lHMDLrLyAY6ixS7T5rTvruVa9clOR0uXLz2V1p764kTRA7kBA3vvZXAS+qgJC0IfD5zHTO/mBmwyeZnAW60wTLBDZO2b05dRwe0DHz6Yptry7rcBgecM47b8crjAssCSSUjTG1mdpzNqc5pmuc2wyekGpLiLFlvgyM6w2JCOsslVug6MCIJ32p5Pj8BJi/pqwMhaEGiemZ1q9aFS6O/SG5j5+zC9M/LAwHRVr6AaJZ9tesnu1vAl9WV5EJTjsz3TPv2sz4Dpi5EGNo37NCP05Xx/6HMQ/KNtYK5pddNlHgehvxYGZgqLCuzWaquN4PqEg/NZw8fuxT9G0Q4He4aW0JE4ZISODBNYQ1XfeZP0BcavGtHwXdcBZDpQL4kK7jVCv+oC0dkMo9fMGxD/eWCie/XLp/nPrbhaecQw3eg9Kf6eOrBeJXUwCJ4pCb41UCl1mALB9xeeXTrvVCpLUn9BuVpd9ti0v65b0wXCGbK63p8z3iwHwRN6/dTu4+PXLjyayLCWKgzTnwny5lDulB1+gVBlfhjjnXiPrkfBp/MHgq4ng65UloBQrScw025nyKr/3gTPNRap225Ir+vzeA3qqHLqWuO0/4BmIWmIdK8Y4myzEnE/pOlmhD5xQ+9F/RvEe9Mw/tvh45lmvakvxQW0EF9tVeGueM8mzo0hqRQGzzT9U19TgVpZWVlZWVlZWTmD639QVMVHxryNZAAAAABJRU5ErkJggg==">
+                                        <img style="width: 2.5vmax;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD4klEQVR4nO2aTYwUVRDHGxGDSna3680oBAgEdQkHMHrwkxgPxOABPMCBA8GbKOoBOKAxAic9EA8evZhgvBhjPBgkUQkXXAwZEiRDV3UPVc1uQogJCOtB2ERtUz0fzE6YnZ6e7qEnef/kJbO9LzX1e6/qvdevxnGsrKysrKysrKzusyAIVpXEfwXY35K6hf4GJ4oWt4yePv2gPhvEZuzTjL8yM9Dx6YsuCH1thKJsGv7etK2fM7HJ+B8wfj82U4XBaKNokWH8MTvYersLnK1dI/ST+pya1w1paw5O5QkcgXivpQYG9j4cNWDD9EFqYMN4dPSA8agFTipg3Kkr4MjMcH213pEY8F6C0HvBMJ0tPDDTlPrqJFIULSqxN9m+obuX6WUIgjH996qZmYdB8FRRgUHwlzVhuDSeoCAYi31vP5ywN9narkpXvBXdZhAY/zaCe7XfeIhrjdBcAYHnJuTSmtheiG8D4+1uEVAOq8v1S7/tkRf/uIwb49ETPFE0YBD6QW1NMG1SX3uwfKPHu9meRpn2x8BMxwoHzHSs4dv+3v3xltPP3gZChwsHLHS4nzOD0w/whPhPG8aTRvDnNA2YzhvG4y1gxuPxCwTTVCqbjCc1lHMDLrLyAY6ixS7T5rTvruVa9clOR0uXLz2V1p764kTRA7kBA3vvZXAS+qgJC0IfD5zHTO/mBmwyeZnAW60wTLBDZO2b05dRwe0DHz6Yptry7rcBgecM47b8crjAssCSSUjTG1mdpzNqc5pmuc2wyekGpLiLFlvgyM6w2JCOsslVug6MCIJ32p5Pj8BJi/pqwMhaEGiemZ1q9aFS6O/SG5j5+zC9M/LAwHRVr6AaJZ9tesnu1vAl9WV5EJTjsz3TPv2sz4Dpi5EGNo37NCP05Xx/6HMQ/KNtYK5pddNlHgehvxYGZgqLCuzWaquN4PqEg/NZw8fuxT9G0Q4He4aW0JE4ZISODBNYQ1XfeZP0BcavGtHwXdcBZDpQL4kK7jVCv+oC0dkMo9fMGxD/eWCie/XLp/nPrbhaecQw3eg9Kf6eOrBeJXUwCJ4pCb41UCl1mALB9xeeXTrvVCpLUn9BuVpd9ti0v65b0wXCGbK63p8z3iwHwRN6/dTu4+PXLjyayLCWKgzTnwny5lDulB1+gVBlfhjjnXiPrkfBp/MHgq4ng65UloBQrScw025nyKr/3gTPNRap225Ir+vzeA3qqHLqWuO0/4BmIWmIdK8Y4myzEnE/pOlmhD5xQ+9F/RvEe9Mw/tvh45lmvakvxQW0EF9tVeGueM8mzo0hqRQGzzT9U19TgVpZWVlZWVlZWTmD639QVMVHxryNZAAAAABJRU5ErkJggg==">
                                     </div>
                                 </button>
-                                <button v-if="seat.seats.seatTypeId == 3 && seat.status == 2 && seat.status == this.model.auth" type="button" disabled class="btn btn-none border-0 shadow-none col-12">
+                                <button v-if="seat.seats.seatTypeId == 3 && seat.status == 2 && seat.customerId == this.model.auth" type="button" disabled class="btn btn-none border-0 shadow-none col-12">
                                     <div class="col-12 text-center mb-5">
                                         <img style="width: 2.5vmax;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD6UlEQVR4nO2aX4hUdRTHf2qhke3M+c0sFRqKmhRk/wwqzbaH9Z4zs2pB7UtI9FRBQWkP/SPXh6AHn0J6sGzvOXfsoZEoCAv8gy/r1kuELyGE+hIEGrUS2G6kG+fOzuw0Obt37tw73o3fF36wc/fHuefzO7+/53eNcXJycnJycnJyus6yFVqZ5/LjVnAwfinfbarDSxpGTw7coM+6sRn6xEMrEgPNfToEVvCQFZpOpuDpRiMKnk7EJtNVYPyi72PPdkc7bRZZwa+Tg62VWeBk7QLTUfU5Ni/4HiXtVJrAM9H2YgNbxrcWGjAIvRk/woJ7Fx4w7nXAUWWZntEZcMFEWH31vacjA15L1qdHQPDbzAMzjauvJpKmzaKilNY3L+jglzbbCvXpv1dWh28CxhNZBQbB46v8gWWhzQr1hb43sRSltL6xXBUreHu7CALjZWB8UevlfFxtGacyB8w4lT9UXqX2QPAlEPqzXQ/o98u3aaXD8xj8G0ZLG0IHGY9kD5i+Ult5pnvV13nqf2aA8VIEo7tqDuK+zAEL7qsFg3ZFqD9hOlnbrNCe7AHTnk72DKYT4Hzg3WeFvgGmYzHL9yAodWD9OzxAMI3Hsae+aFdODTjLSge4OrwEhB6Le3btD7x1rY4WRwfvjGtPfTEjI4tTA7bsvdLVeKvt2t6pw1rBd7sdw4UAX04NGJI5TEw0umGUFSJh30wnRguMO7refDCNNwF/150tnMoHtD29MZxhOWBJoksLPpnUfjqRwjilwyy1CENKGZDMTlrggMlF2LouTQk1Ak6C4C/NOTZg+gMEd/+/xjDjRcul5zTNFK4UB3fcAkwvFKT0UPM6HHXbazIOPFHwvbtm3v2opnByfvl+/X1rsPVmEO/ZPNNOvf+qQeNHCxuY8e3wvYzvzT6jq5bxfWD6qcm/n2HUu0OjbwV/nw/4fFaBIdh6jyberOCVCI3zYa1x6PP2deicAfFen98YjdS6DI30ElgzpTmhByI1DtOXM72B5wjc7jAnralYy3TKCp5tLcD4IwTephA4KD8MTGeuVS+Nkq/gFvMBLbWCFyJAvzYb4f/YGtOJrqur1F5KD/lzw+LZ/urA8tgv6K8OLM99MrSmXdHPH0yP1T5/jpNF9jZqnWYfdRY3UaRXFZbxtwhj5g3TQ8GBwZwV/KEF9oqu0aHfjK+2zDu/RoM+sPHG5im/XdH1z/RY+g2HpnobsAE+r88LQekpK/RXS0DO/OsDmjkNM62d477pUv0m4noovCwT2p8Xb9vsZxk42RL5sfp9U0fSZaHg4xONW7gKPhh5bPRIeu9V9099jQXq5OTk5OTk5ORkutc/H+IWmsAjGBIAAAAASUVORK5CYII=">
                                     </div>
                                 </button>
-                                <button v-if="seat.seats.seatTypeId == 3 && seat.status == 2 && seat.status != this.model.auth" type="button" disabled class="btn btn-none border-0 shadow-none col-12">
+                                <button v-if="seat.seats.seatTypeId == 3 && seat.status == 2 && seat.customerId != this.model.auth" type="button" disabled class="btn btn-none border-0 shadow-none col-12">
                                     <div class="col-12 text-center mb-5">
-                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD5klEQVR4nO2aTWhcVRTHX4wVP0okwcmc82ZsxbQRC1Xsws8gXYjYRdOFLlyUdtfYDxeti7aUNq7sQly4dCMoboxIF0WLjRLzzpmXQZKFICqUtnRRpFDtx6LJzL16y3kzk2QGJ/PmzXuTN3D/cOHlzXByfjnnfp0Tx7GysrKysrKyslpnmWIuXy7A64rcN6IOMwfPmimnf9nmjPOgvOvEpvhk/HwuPlDaNKgIvtKMJp4Bv9Zsy3McNhXhf5rhnPHzQ53BGqdPM34fH2xlrADHa1czXBSfIwMrD96K36kkgdEoxjcjA2vCk70GrAlPRI8w4Ye9Biw+W+CwUgV4p7IC9kaExVfF8LbTico0/LJmnEs9MIEvvoaCMsbpM547Wrehe/iaKQ4NBJ/7+Uc04U+pBSb40cxsfjjwtTg0IL7XHXg8d3R5uzKzT2CzCCqCe5pgIvjeXPYpRVBKG7D4ZAqwuWIP3lMMi80ywMxkQLaeb9Y0yKhL/vD2wCDhd2kD1oznxVbJyz0nvrZg+Vq2njutjcLRYBFj/DhtwOJTNbpHW2cD3nba2ds0w5m0AYtP7ZwZnHaAS5R7XjNe0AzTEceCYvyiBizPwQWCwI9mDy9IKicGnGYlAmymnP4y4Vjk+7Cf39LoqPk5tzXyXZhwzBjngcSANeGRGO6tp2qwmuB0x3OYsocTA1YxXCaClXIlDUPsEPH65rRllN3xjg8fBP5yhBmLncFCSZG7OzHgNMsCcywpjXviOk/HMYKUZnc8sQirhCog6V20yAIbG2G2KW1iWqBuKoI/FMPS8juGa6k/ael2QRkvS0OgdmY2v217SBfcd6UCs3of1gwHex5YEVyXEpTUo+REJUX2csF9NQD3IBOc7T04JM/VbfOzngbW1XqaIvi84Q/xqSK8sSoL/pLuppkffFwR3l0TWBFeTSuwmXWfNOw+EzIon1RSu3nzTzFekSvaB60NwmR1nkx2FdiDjNx5QwEzflkF/nYNjmOVlijBhCYoBAtE4yD8vTZvyl72JUXw5/9+L4FR9rMvmnl8VBH8HSL991WDMt1oRzOwJjzQUSu1m9KM77fIwAUz72yI/AvMTGajoeGnm45iLu90Wc3q54rhluHMiJSf6nz8IftYKMPSqlAM/7ROITyeOGWDX5pxvgF2SfZo+VwxnK1fxOBmKGhJDUVwKcRCtrcboHW+0aZBTfhLFXZREeyS97IGNXY5Za0xq/6BZm3DnBlp3m+SOlSlE7EekummGD4qs/uK/KwJ9ivCfxuCwbV+U1uqNNCyO2tl0dIs7gg9N7qkUsF9YaV0m90ZCdTKysrKysrKysrpXPcBqXU0zAX2I9kAAAAASUVORK5CYII=">
+                                        <img style="width: 2.5vmax;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD5klEQVR4nO2aTWhcVRTHX4wVP0okwcmc82ZsxbQRC1Xsws8gXYjYRdOFLlyUdtfYDxeti7aUNq7sQly4dCMoboxIF0WLjRLzzpmXQZKFICqUtnRRpFDtx6LJzL16y3kzk2QGJ/PmzXuTN3D/cOHlzXByfjnnfp0Tx7GysrKysrKyslpnmWIuXy7A64rcN6IOMwfPmimnf9nmjPOgvOvEpvhk/HwuPlDaNKgIvtKMJp4Bv9Zsy3McNhXhf5rhnPHzQ53BGqdPM34fH2xlrADHa1czXBSfIwMrD96K36kkgdEoxjcjA2vCk70GrAlPRI8w4Ye9Biw+W+CwUgV4p7IC9kaExVfF8LbTico0/LJmnEs9MIEvvoaCMsbpM547Wrehe/iaKQ4NBJ/7+Uc04U+pBSb40cxsfjjwtTg0IL7XHXg8d3R5uzKzT2CzCCqCe5pgIvjeXPYpRVBKG7D4ZAqwuWIP3lMMi80ywMxkQLaeb9Y0yKhL/vD2wCDhd2kD1oznxVbJyz0nvrZg+Vq2njutjcLRYBFj/DhtwOJTNbpHW2cD3nba2ds0w5m0AYtP7ZwZnHaAS5R7XjNe0AzTEceCYvyiBizPwQWCwI9mDy9IKicGnGYlAmymnP4y4Vjk+7Cf39LoqPk5tzXyXZhwzBjngcSANeGRGO6tp2qwmuB0x3OYsocTA1YxXCaClXIlDUPsEPH65rRllN3xjg8fBP5yhBmLncFCSZG7OzHgNMsCcywpjXviOk/HMYKUZnc8sQirhCog6V20yAIbG2G2KW1iWqBuKoI/FMPS8juGa6k/ael2QRkvS0OgdmY2v217SBfcd6UCs3of1gwHex5YEVyXEpTUo+REJUX2csF9NQD3IBOc7T04JM/VbfOzngbW1XqaIvi84Q/xqSK8sSoL/pLuppkffFwR3l0TWBFeTSuwmXWfNOw+EzIon1RSu3nzTzFekSvaB60NwmR1nkx2FdiDjNx5QwEzflkF/nYNjmOVlijBhCYoBAtE4yD8vTZvyl72JUXw5/9+L4FR9rMvmnl8VBH8HSL991WDMt1oRzOwJjzQUSu1m9KM77fIwAUz72yI/AvMTGajoeGnm45iLu90Wc3q54rhluHMiJSf6nz8IftYKMPSqlAM/7ROITyeOGWDX5pxvgF2SfZo+VwxnK1fxOBmKGhJDUVwKcRCtrcboHW+0aZBTfhLFXZREeyS97IGNXY5Za0xq/6BZm3DnBlp3m+SOlSlE7EekummGD4qs/uK/KwJ9ivCfxuCwbV+U1uqNNCyO2tl0dIs7gg9N7qkUsF9YaV0m90ZCdTKysrKysrKysrpXPcBqXU0zAX2I9kAAAAASUVORK5CYII=">
                                     </div>
                                 </button>
                             </div>
@@ -394,6 +394,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                     auth: null,
                 },
                 connection: null,
+                bookingTimeout: null,
             }
         },
         mounted() {
@@ -421,6 +422,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                     console.log("Connected to SignalR Hub");
                     this.listenForBookTicket();
                     this.listenForOderTicket();
+                    this.listenForCancelTicket();
                 }).catch((error) => {
                     console.error("Error connecting to SignalR Hub: ", error);
                 });
@@ -435,6 +437,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
             listenForBookTicket() {
                 console.log("Listening for bookingTicket");
                 this.connection.on("bookingTicket", () => {
+                    this.model.total = 0;
+                    this.getTickets(this.$route.params.id);
+                });
+            },
+            listenForCancelTicket() {
+                console.log("Listening for cancelTicket");
+                this.connection.on("cancelTicket", () => {
                     this.model.total = 0;
                     this.getTickets(this.$route.params.id);
                 });
@@ -478,7 +487,28 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                     console.error('Error fetching schedule:', error);
                 });          
             },
+            async cancelBooking(cusId){
+                await axios.put(`https://localhost:7071/api/Tickets/cancel-ticket?cusId=${cusId}`).then(response => {
+                    this.$nextTick(() => {
+                        this.model.total = 0;
+                        this.getTickets(this.$route.params.id);
+                    });
+                }).catch(error => {
+                    console.error('Error cancel booking:', error);
+                });
+            },
+            startBookingProcess(cusId) {
+                this.bookingTimeout = setTimeout(() => {
+                    this.cancelBooking(cusId); 
+                }, 3000); // 5 phút
+            },
+            completeBooking() {
+                clearTimeout(this.bookingTimeout);
+                this.bookingTimeout = null; 
+            },
             orderTicket(ticketId, cusId){
+                clearTimeout(this.bookingTimeout);
+                this.startBookingProcess(cusId);
                 axios.put(`https://localhost:7071/api/Tickets/${ticketId}?cusId=${cusId}`).then(response => {
                     this.$nextTick(() => {
                         this.model.total = 0;
@@ -491,9 +521,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
             },
             bookingTicket(){
                 // this.$router.push({ name: 'PaymentView', params: { scheduleId: this.$route.params.id } });
-                axios.put(`https://localhost:7071/api/Tickets/booking-tickets?cusId=${this.model.auth}`).then(response => {
+                axios.put(`https://localhost:7071/api/Tickets/booking-tickets?cusId=${this.model.auth}&scheduleId=`+ this.$route.params.id).then(response => {
                     console.log(response.data);
+                    this.completeBooking();
                      this.$router.push({ path: '/bookingTicket/' + this.$route.params.id});
+                     alert('Booking ticket success. Please check your email');
                 }).catch(error => {
                     console.error('Error booking ticket:', error);
                 });

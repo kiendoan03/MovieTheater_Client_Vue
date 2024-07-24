@@ -61,7 +61,19 @@ import axios from 'axios'
             }
         },
         methods: {
+            validatePassword(password) {
+                const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$/;
+                return re.test(password);
+            },
             handleLogin() {
+                if (!this.model.account.username || !this.model.account.password) {
+                    alert('All fields are required');
+                    return;
+                }
+                if (!this.validatePassword(this.model.account.password)) {
+                    alert('Password must contain at least one lowercase letter, one uppercase letter, one digit, one special character, and be 8-15 characters long.');
+                    return;
+                }
                 axios.post('https://localhost:7071/api/Account/login', this.model.account).then(response => {
                     if(response.data.role == 'Customer' ) {
                         console.log(response.data);

@@ -25,7 +25,8 @@
                 </div>
 
                     <div class="dropdown">
-                        <img class="col-12 border" style="border-radius: 50%;object-fit: cover; overflow: hidden;height: 3vmax; width: 3vmax;" src="../assets/image/Netflix-avt.png" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" height="" alt="">
+                        <img class="col-12 border" style="border-radius: 50%;object-fit: cover; overflow: hidden;height: 3vmax; width: 3vmax;" v-if="!auth" src="../assets/image/Netflix-avt.png" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" height="" alt="">
+                        <img class="col-12 border" style="border-radius: 50%;object-fit: cover; overflow: hidden;height: 3vmax; width: 3vmax;" v-if="auth" :src="image" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" height="" alt="">
                             <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton1"> 
                                 <li><RouterLink v-if="!auth" class="dropdown-item bg-dark text-light" to="/login"><font-awesome-icon :icon="['fas', 'right-to-bracket']" style="color: #ffffff;" /> Login</RouterLink></li>
                                 <li><RouterLink v-if="auth" class="dropdown-item bg-dark text-light" to="/user"><font-awesome-icon :icon="['fas', 'user']" style="color: #ffffff;" /> {{ username }}</RouterLink></li>
@@ -36,17 +37,21 @@
             </section>
 </template>
 <script>
+import axios from 'axios'
     export default {
         name: 'HeaderView',
         data: function() {
         return {
             auth: false,
-            username: localStorage.getItem('name_cus')
+            username: localStorage.getItem('name_cus'),
+            image: null,
+            baseUrl: 'https://localhost:7071'
         }
     },
     mounted() {
         this.auth = localStorage.getItem('role_cus') == 'Customer' && localStorage.getItem('token_cus') != null;
         console.log(this.auth);
+        this.getUserById(localStorage.getItem('id_cus'));
     },
     methods: {
         logout() {
@@ -57,6 +62,18 @@
             localStorage.removeItem('name_cus');
             this.$router.push('/');
             this.auth = false;
+        },
+        getUserById(id) {
+            axios.get(`https://localhost:7071/api/Customers/${id}`,{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token_cus')}`
+                }
+            }).then(response => {
+                console.log('kjahsd',response.data);
+                this.image = this.baseUrl + response.data.image;
+            }).catch(error => {
+                console.log(error);
+            })
         }
     }
 }
