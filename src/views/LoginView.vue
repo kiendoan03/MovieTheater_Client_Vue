@@ -91,6 +91,7 @@ import axios from 'axios'
                     }
                 }).catch(error => {
                     console.log(error);
+                    alert('Login failed, Username or password is incorrect');
                 })
             },
             freshForm() {
