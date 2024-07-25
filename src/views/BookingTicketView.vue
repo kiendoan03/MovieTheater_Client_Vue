@@ -500,7 +500,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
             startBookingProcess(cusId) {
                 this.bookingTimeout = setTimeout(() => {
                     this.cancelBooking(cusId); 
-                }, 3000); // 5 phút
+                }, 300000); // 5 phút
             },
             completeBooking() {
                 clearTimeout(this.bookingTimeout);

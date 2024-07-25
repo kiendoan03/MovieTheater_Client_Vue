@@ -167,14 +167,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
         </section>
 
         <!-- Related Movies -->
-        <section>
+        <!--<section>
 
             <span class="text-light" style="font-size: 1.7vmax;"> Related Movies </span>
 
 
             <div class="mt-4 d-flex col-12 border border-0  hide-scrollbar" style="overflow-x: scroll;">
 
-                <!-- @foreach($related_movie as $related_movie) -->
                 <a href="">
                     <img class="border border-0  me-4" style="height: 13vmax; width: 23vmax; object-fit: cover;opacity:0.9; border-radius :1vmax" src="https://localhost:7071/uploads/images/movies/thumbnails/6d6e92fa-0820-4938-98b0-fb298c5819ec_The Nun II.png" alt="">
                 </a>
@@ -190,11 +189,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                 <a href="">
                     <img class="border border-0  me-4" style="height: 13vmax; width: 23vmax; object-fit: cover;opacity:0.9; border-radius :1vmax" src="https://localhost:7071/uploads/images/movies/thumbnails/6d6e92fa-0820-4938-98b0-fb298c5819ec_The Nun II.png" alt="">
                 </a>
-                <!-- @endforeach -->
 
             </div>
 
-        </section>
+        </section>-->
 
     </div>
 
@@ -212,7 +210,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 <section id="book__ticket" class="row full-height-ticket px-5" ref="ticket">
   <section class=" full-height" >
-      <span  @click="toDetailedPage" class="border rounded-pill text-light text-center px-3 py-2 fs-5" style="cursor: pointer;">
+      <span  @click="toOverviewPage" class="border rounded-pill text-light text-center px-3 py-2 fs-5" style="cursor: pointer;">
         <font-awesome-icon :icon="['fas', 'backward']" class="mt-5"style="color: #ffffff;" />  Back 
       </span>
       <div class="col-10 d-flex flex-wrap mx-auto hide-scrollbar mt-2 mb-5" style="height: 85%; overflow-x: hidden; overflow-y: scroll;">
