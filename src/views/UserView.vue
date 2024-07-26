@@ -293,6 +293,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                 }
             }).then(response => {
                 this.tickets = response.data;
+                this.tickets.reverse();
                 this.totalPages = Math.ceil(this.tickets.length / this.pageSize);
                 console.log('ticket',this.tickets);
             }).catch(error => {

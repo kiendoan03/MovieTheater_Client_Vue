@@ -44,19 +44,19 @@
     </section>
   
     <section>
-      <div class="row mt-5 mb-5">
+      <div class="row mt-5 mb-5 mx-5">
         <div v-if="movies.length" v-for="movie in movies" :key="movie.id" class="col-3 mb-5">
           <div class="card bg-transparent" style="width: 20vmax;">
             <RouterLink :to="`/movieDetail/${movie.id}`">
               <img
                 :src="movie.poster"
                 class="card-img-top object-fit-cover"
-                style="opacity:0.9; border-radius :1vmax; box-shadow: #fff 0px 5px 15px; object-fit:cover;"
+                style="opacity:0.9; border-radius :1vmax; box-shadow: #fff 0px 5px 15px; object-fit:cover; max-height: 25vmax;"
                 alt="..."
               />
             </RouterLink>
           </div>
-          <div class="card-body">
+          <div class="card-body mt-3">
             <span class="card-text text-light" style="font-size: 1.3vmax;">{{ movie.movieName }}</span>
           </div>
         </div>
