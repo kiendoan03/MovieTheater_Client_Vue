@@ -290,12 +290,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                                     <b class="text-light" v-if="seat.seats.row == 6">F{{ seat.seats.column }}</b>
                                 </span>
                                 <div v-if="seat.status == 1 && seat.customerId == this.model.auth" class="text-light fs-5 fw-bolder mb-3">
-                                    <span class="text-danger">Price: <b class="text-light">{{seat.finalPrice}} VND</b></span>
+                                    <span class="text-danger">Price: <b class="text-light">{{formatPrice(seat.finalPrice)}}</b></span>
                                 </div>
                             </div>
                             
                             <div ref="totalPrice" class="text-light fs-5 fw-bolder mt-5 mb-3">
-                                <span class="text-danger fs-4">Total price: <b class="text-light">{{ model.total }} VND</b> </span>
+                                <span class="text-danger fs-4">Total price: <b class="text-light">{{ formatPrice(model.total) }}</b> </span>
                             </div>
 
                         </div>
@@ -455,6 +455,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
                     this.model.auth = localStorage.getItem('id_cus');
                 }
                 console.log('akdah',this.model.auth);
+            },
+            formatPrice(price) {
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
             },
             async getTickets(scheduleId) {
                 console.log('abccdc',scheduleId);
